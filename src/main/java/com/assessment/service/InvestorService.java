@@ -86,8 +86,6 @@ public class InvestorService {
         if (withdrawalAmount.compareTo(currentBalance.multiply(new BigDecimal("0.9"))) > 0) {
             return false;
         }
-
-        //Create a new WITHDRAWAL process with status STARTED
         WithdrawalProcess withdrawalProcess = new WithdrawalProcess();
         withdrawalProcess.setInvestor(investor);
         withdrawalProcess.setProduct(product);
@@ -99,8 +97,6 @@ public class InvestorService {
         BigDecimal newBalance = currentBalance.subtract(withdrawalAmount);
         product.setBalance(newBalance);
         productRepository.save(product);
-
-        // Update the status to DONE and save the process with the audit trail
         withdrawalProcess.setStatus(WithdrawalStatus.DONE);
         withdrawalProcess.setPreviousBalance(currentBalance);
         withdrawalProcess.setStatusChangedAt(LocalDateTime.now());
@@ -111,8 +107,6 @@ public class InvestorService {
         public boolean isInvestorEligibleForRetirement(Investor investor) {
             LocalDate today = LocalDate.now();
             LocalDate retirementAge = investor.getDateOfBirth().plusYears(65);
-
-            // Calculate the difference between today and retirement age
             Period period = Period.between(today, retirementAge);
             if (period.isNegative() || period.isZero()) {
                 return true;
