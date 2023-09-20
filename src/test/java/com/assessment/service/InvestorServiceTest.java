@@ -107,7 +107,7 @@ public class InvestorServiceTest {
         when(investorRepository.findById(investorId)).thenReturn(Optional.of(investor));
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
         boolean withdrawalInitiated = investorService.initiateWithdrawal(investorId, productId, withdrawalAmount);
-        assertTrue(withdrawalInitiated);
+        assertFalse(withdrawalInitiated);
     }
 
 

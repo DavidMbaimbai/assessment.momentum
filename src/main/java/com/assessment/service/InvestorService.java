@@ -104,16 +104,21 @@ public class InvestorService {
 
         return true;
     }
-        public boolean isInvestorEligibleForRetirement(Investor investor) {
-            LocalDate today = LocalDate.now();
-            LocalDate retirementAge = investor.getDateOfBirth().plusYears(65);
-            Period period = Period.between(today, retirementAge);
-            if (period.isNegative() || period.isZero()) {
-                return true;
-            }
-
+    public boolean isInvestorEligibleForRetirement(Investor investor) {
+        if (investor == null || investor.getDateOfBirth() == null) {
             return false;
         }
+
+        LocalDate today = LocalDate.now();
+        LocalDate retirementAge = investor.getDateOfBirth().plusYears(65);
+        Period period = Period.between(today, retirementAge);
+        if (period.isNegative() || period.isZero()) {
+            return true;
+        }
+
+        return false;
+    }
+
     }
 
 
